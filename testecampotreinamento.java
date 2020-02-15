@@ -4,13 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-
 import static org.junit.Assert.assertEquals;
-
 import java.util.List;
-
-import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.junit.Assert;
+import org.junit.Ignore;
 
 
 public class testecampotreinamento {
@@ -54,7 +51,6 @@ public class testecampotreinamento {
 		Assert.assertEquals("Linha1\nLinha2\nLinha3", driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
 		
 		driver.quit();
-
 	}
 	
 	@Test
@@ -72,7 +68,6 @@ public class testecampotreinamento {
 		//Assert
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
 		driver.quit();
-
 	}
 	@Test
 	
@@ -87,8 +82,7 @@ public class testecampotreinamento {
 		
 		//Assert
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
-		//driver.quit();
-
+		driver.quit();
 	}
 	@Test
 	
@@ -114,7 +108,6 @@ public class testecampotreinamento {
 		
 		Assert.assertEquals("Doutorado", combo.getFirstSelectedOption().getText());
 		driver.quit();
-		
 	}
 	@Test
 	
@@ -145,7 +138,6 @@ public class testecampotreinamento {
 		}
 		Assert.assertTrue(encontrou);	
 		driver.quit();
-
 	}
 	
 	@Test
@@ -185,10 +177,77 @@ public class testecampotreinamento {
 		list = combo.getAllSelectedOptions();
 		assertEquals(0, list.size()); //verifica se a quantidade de W.e selc é 2
 		
-
 		driver.quit();
+	}
+	@Test
+	
+	public void testOnClickButton() {
 		
-		
+		//Arrange
 
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		//Act
+		
+		driver.get("file:///"+System.getProperty("user.dir")+"/src/main/resources/componentes.html");
+		WebElement botao = driver.findElement(By.id("buttonSimple"));
+		botao.click();
+		
+		//Assert
+		
+		assertEquals("Obrigado!", botao.getAttribute("value"));
+		//assertEquals("Obrigado!", (driver.findElement(By.id("buttonSimple")).getAttribute("value")));
+		driver.quit();
+	}
+	
+	@Test
+	//@Ignore - notação utilizada para ignorar algum test case
+	
+	public void InteragirComLinks() {
+			
+			//Arrange
+	
+			WebDriver driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			
+			//Act
+			
+			driver.get("file:///"+System.getProperty("user.dir")+"/src/main/resources/componentes.html");
+			WebElement linkVoltar = driver.findElement(By.linkText("Voltar"));
+			linkVoltar.click();
+			WebElement textoVoltar = driver.findElement(By.id("resultado"));
+			
+			//Assert
+			
+			assertEquals("Voltou!", textoVoltar.getText());
+			driver.quit();
+	}
+	
+	@Test
+	
+	public void deveBuscarTextoNaTela() {
+			
+		//Arrange
+	
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		//Act
+		
+		driver.get("file:///"+System.getProperty("user.dir")+"/src/main/resources/componentes.html");
+		driver.findElement(By.tagName("body"));
+		//Assert.assertTrue(driver.findElement(By.tagName("body"))
+			//	.getText().contains("Campo de Treinamento"));
+		WebElement  titulo = driver.findElement(By.tagName("h3"));
+		WebElement carefullClick = driver.findElement(By.className("facilAchar"));
+		
+		//Assert
+		
+		Assert.assertEquals("Campo de Treinamento", titulo.getText());
+		assertEquals("Cuidado onde clica, muitas armadilhas...", carefullClick.getText());
+		
+		driver.quit();
+			
 	}
 }
