@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertArrayEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -25,14 +27,55 @@ public class testesJavascript {
 		btnAlert.click();
 		
 		Alert alert = driver.switchTo().alert();
-		String textoAlrt = alert.getText();
-		Assert.assertEquals("Alert Simples", textoAlrt);
+		String textoAlert = alert.getText();
+		Assert.assertEquals("Alert Simples", textoAlert);
 		alert.accept();
 			
 		//Assert
 		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(textoAlrt);
+		driver.findElement(By.id("elementosForm:nome")).sendKeys(textoAlert);
 		driver.quit();
 	}
+	
+	@Test
+	
+	
+	public void DeveInteragirComConfirm() {
+		
+		//Arrange
+	
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		//Act
+		
+		driver.get("file:///"+System.getProperty("user.dir")+"/src/main/resources/componentes.html");
+		WebElement btnConfirm = driver.findElement(By.id("confirm"));
+		btnConfirm.click();
+		Alert confirm = driver.switchTo().alert();
+		String confirmMessage = confirm.getText();
+		Assert.assertEquals("Confirm Simples", confirmMessage);
+		confirm.accept();
+		confirmMessage = confirm.getText();
+		Assert.assertEquals("Confirmado", confirmMessage);
+		confirm.dismiss();
+		
+		btnConfirm.click();
+		confirm = driver.switchTo().alert();
+		confirm.dismiss();
+		confirmMessage = confirm.getText();
+		Assert.assertEquals("Negado", confirmMessage);
+		
+		
+		
+			
+		//Assert
+		
+		//Assert.assertEquals("Confirm Simples", confirmMessage);
+		
+		
+	
+		driver.quit();
 
+	}
 }
