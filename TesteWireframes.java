@@ -32,4 +32,26 @@ public class TesteWireframes {
 		//End
 			driver.quit();
 	}
+	@Test
+	
+	public void interagirComPopup() {
+		
+		//Arrange
+		
+		WebDriver driver = new ChromeDriver();
+		TargetUrl url = new TargetUrl();
+		driver.get(url.getUrl());
+		
+		//Act
+		
+		driver.findElement(By.id("buttonPopUpEasy")).click();
+		driver.switchTo().window("Popup");
+		driver.findElement(By.tagName("textArea")).sendKeys("Teste Escrita no popup!");
+		driver.close(); //fechar popup e voltar para janela principal
+		driver.switchTo().window("");
+		driver.findElement(By.tagName("textArea")).sendKeys("Votei, Teste Escrita!");
+			
+		//End
+		driver.quit();	
+	}
 }
