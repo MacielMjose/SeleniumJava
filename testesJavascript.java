@@ -1,5 +1,3 @@
-import static org.junit.Assert.assertArrayEquals;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -66,15 +64,37 @@ public class testesJavascript {
 		confirmMessage = confirm.getText();
 		Assert.assertEquals("Negado", confirmMessage);
 		
-		
-		
-			
 		//Assert
 		
-		//Assert.assertEquals("Confirm Simples", confirmMessage);
-		
-		
+		driver.quit();
+
+	}
 	
+	@Test
+	
+	public void DeveInteragirComPrompt() {
+
+		//Arrange
+	
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		//Act
+		
+		driver.get("file:///"+System.getProperty("user.dir")+"/src/main/resources/componentes.html");
+		WebElement btnConfirm = driver.findElement(By.id("prompt"));
+		btnConfirm.click();
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Digite um numero", alert.getText());
+		alert.sendKeys("12");
+		alert.accept();
+		Assert.assertEquals("Era 12?", alert.getText());
+		alert.accept();
+		Assert.assertEquals(":D", alert.getText());
+		alert.accept();
+		
+		//Assert
+		
 		driver.quit();
 
 	}
