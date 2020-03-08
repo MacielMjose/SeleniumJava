@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
@@ -50,8 +51,37 @@ public class TesteWireframes {
 		driver.close(); //fechar popup e voltar para janela principal
 		driver.switchTo().window("");
 		driver.findElement(By.tagName("textArea")).sendKeys("Votei, Teste Escrita!");
+	
 			
 		//End
-		driver.quit();	
+		//driver.quit();	
+	}
+	
+	@Test
+	
+	public void testeWindowHandler() {
+		
+		//Arrange
+	
+		WebDriver driver = new ChromeDriver();
+		TargetUrl url = new TargetUrl();
+		driver.get(url.getUrl());
+		
+		//Act
+			
+		driver.findElement(By.id("buttonPopUpHard")).click();
+		System.out.println(driver.getWindowHandle()); //retorna com a janela corrente gerenciada
+		System.out.println(driver.getWindowHandles()); //retorna com as janelas gerenciadas
+		driver.switchTo().window((String)driver.getWindowHandles().toArray()[1]);
+		driver.findElement(By.tagName("textArea")).sendKeys("Texto Window 2");
+		driver.switchTo().window((String)driver.getWindowHandles().toArray()[0]);
+		driver.findElement(By.tagName("textArea")).sendKeys("Texto Window 1");
+		
+		//Assert
+		
+		
+		//End
+		driver.quit();
+	
 	}
 }
